@@ -23,18 +23,12 @@ RUN set -x \
 
 RUN mkdir /docker-entrypoint-initdb.d
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-# for MYSQL_RANDOM_ROOT_PASSWORD
-		pwgen \
-# for mysql_ssl_rsa_setup
-		openssl \
 # FATAL ERROR: please install the following Perl modules before executing /usr/local/mysql/scripts/mysql_install_db:
 # File::Basename
 # File::Copy
 # Sys::Hostname
 # Data::Dumper
-		perl \
-	&& rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y perl pwgen --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 RUN set -ex; \
 # gpg: key 5072E1F5: public key "MySQL Release Engineering <mysql-build@oss.oracle.com>" imported
@@ -45,8 +39,8 @@ RUN set -ex; \
 	rm -r "$GNUPGHOME"; \
 	apt-key list > /dev/null
 
-ENV MYSQL_MAJOR 5.7
-ENV MYSQL_VERSION 5.7.20-1debian8
+ENV MYSQL_MAJOR 5.6
+ENV MYSQL_VERSION 5.6.38-1debian8
 
 RUN echo "deb http://repo.mysql.com/apt/debian/ jessie mysql-${MYSQL_MAJOR}" > /etc/apt/sources.list.d/mysql.list
 

@@ -1,6 +1,5 @@
-the mysql image based on official image
-
-add:
+add
+---
 
 ```
 # change the localtime and TZ
@@ -9,3 +8,5 @@ ENV TZ="Asia/Shanghai"
 ```
 
 or you can use the official image with `-e TZ=Asia/Shanghai`
+
+
